@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/DEAlib.iml" filepath="$PROJECT_DIR$/.idea/DEAlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DEAlib.iml" filepath="$PROJECT_DIR$/DEAlib.iml" />
     </modules>
   </component>
 </project>

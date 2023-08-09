@@ -10,7 +10,7 @@
   },
   "description": " 	\"query. query. query target. is turko lib? turko lib? no. revert function.\" ",
   "gameVersion": "0.96a-RC9",
-  "modPlugin":"data.plugins.DEA_Plugin",
+  "modPlugin":"DEA.helper.plugins.DEAlib_ModPlugin",
   "jars": [
     "jars/DEAlib.jar"
   ],

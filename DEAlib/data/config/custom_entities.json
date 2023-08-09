@@ -1,0 +1,32 @@
+{
+
+	"dealib_render_plugin_thing":{
+		"defaultName":"", # used if name=null in addCustomEntity()
+		"nameInText":"",
+		"aOrAn":"a",
+		"defaultRadius":0, # used if radius<0 in addCustomEntity()
+		"interactionImage":"graphics/illustrations/space_wreckage.jpg",
+		"icon":"graphics/DEA_Error_Image.png",
+		"iconWidth":1,
+		"iconHeight":1,
+		"sprite":"graphics/DEA_Error_Image.png",
+		"spriteWidth":1,
+		"spriteHeight":1,
+		"renderShadow":false,
+		"useLightColor":false,
+		"showInCampaign":false,
+		"showIconOnMap":false,
+		"showNameOnMap":false,
+		"scaleNameWithZoom":false,
+		"scaleIconWithZoom":false,
+		"nameColor":[70,200,255,255],
+		"nameShadowColor":[0,0,0,255],
+		#"renderCircleIndicator":false,
+		"renderCircleIndicator":false,
+		"renderCircleIndicatorSelectionFlash":false,
+		#"customDescriptionId":"salvage_gate",
+		"tags":["neutrino"],
+		"layers": [ABOVE],
+		"pluginClass":"DEA.helper.plugins.ui.DEAlib_CustomCampaignEntittyForUI",
+	}
+}

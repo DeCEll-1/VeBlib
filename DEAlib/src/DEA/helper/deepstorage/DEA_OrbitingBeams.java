@@ -1,16 +1,5 @@
 package DEA.helper.deepstorage;
 
-import DEA.helper.render.DEA_RenderPluginFunctions;
-import com.fs.starfarer.api.combat.ViewportAPI;
-import org.lazywizard.lazylib.MathUtils;
-import org.lazywizard.lazylib.VectorUtils;
-import org.lwjgl.util.vector.Vector2f;
-
-import java.awt.*;
-
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.glFlush;
-
 public class DEA_OrbitingBeams {
 
 //    public static void DEA_DrawPolygonWHeightAndCenter(Vector2f center, float sides, float circleAngle, float height, java.awt.Color lineColor, ViewportAPI viewport) {
