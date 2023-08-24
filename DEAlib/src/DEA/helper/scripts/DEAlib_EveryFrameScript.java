@@ -4,7 +4,7 @@ import DEA.helper.plugins.ui.DEAlib_CustomCampaignEntittyForUI;
 import DEA.helper.render.renderClassesFolder.DEAlib_BoxData;
 import DEA.helper.render.renderClassesFolder.DEAlib_LineData;
 import DEA.helper.render.renderClassesFolder.DEAlib_LineWWidthData;
-import DEA.helper.render.renderClassesFolder.DEAlib_PolygonWHeightAndCenterData;
+import DEA.helper.render.renderClassesFolder.DEAlib_RingData;
 import com.fs.starfarer.api.EveryFrameScript;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CampaignEngineLayers;
@@ -19,7 +19,7 @@ public class DEAlib_EveryFrameScript implements EveryFrameScript {
 
     private HashMap<String, DEAlib_LineData> lines;
     private HashMap<String, DEAlib_LineWWidthData> lineWWidths;
-    private HashMap<String, DEAlib_PolygonWHeightAndCenterData> PolygonWHeightAndCenters;
+    private HashMap<String, DEAlib_RingData> PolygonWHeightAndCenters;
     private HashMap<String, DEAlib_BoxData> boxDatas;
 
     private boolean doOnce = true;
@@ -60,11 +60,12 @@ public class DEAlib_EveryFrameScript implements EveryFrameScript {
 
                 CustomCampaignEntittyForUI = new DEAlib_CustomCampaignEntittyForUI(token);
 
-//                CustomCampaignEntittyForUI.init(token, token.getCustomPlugin());
+                CustomCampaignEntittyForUI.init(token, null);
             } else {
                 SectorEntityToken token = Global.getSector().getEntityById("dealib_render_plugin_thingEveryFrameScript");
 
-                CustomCampaignEntittyForUI = new DEAlib_CustomCampaignEntittyForUI(token);
+                CustomCampaignEntittyForUI = new DEAlib_CustomCampaignEntittyForUI();
+                CustomCampaignEntittyForUI.init(token, null);
             }
             doOnce = false;
         }
@@ -100,9 +101,9 @@ public class DEAlib_EveryFrameScript implements EveryFrameScript {
         }
     }
 
-    public void DEAlib_DrawPolygonWHeightAndCenterInPlugin(HashMap<String, DEAlib_PolygonWHeightAndCenterData> PolygonWHeightAndCenters) {
+    public void DEAlib_DrawPolygonWHeightAndCenterInPlugin(HashMap<String, DEAlib_RingData> PolygonWHeightAndCenters) {
         if (PolygonWHeightAndCenters == null)
-            this.PolygonWHeightAndCenters = new HashMap<String, DEAlib_PolygonWHeightAndCenterData>();
+            this.PolygonWHeightAndCenters = new HashMap<String, DEAlib_RingData>();
         this.PolygonWHeightAndCenters.putAll(PolygonWHeightAndCenters);
     }
 

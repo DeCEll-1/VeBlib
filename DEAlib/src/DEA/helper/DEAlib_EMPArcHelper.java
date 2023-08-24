@@ -14,7 +14,7 @@ import static DEA.helper.DEAlib_BoundsHelper.DEAlib_GetRandomBoundLocation;
 public class DEAlib_EMPArcHelper {
 
     /**
-     * gets the color rainbow </br>
+     * spawns visual arc </br>
      *
      * @param from      the arcs source location
      * @param to        the arcs end location

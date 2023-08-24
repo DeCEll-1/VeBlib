@@ -4,20 +4,22 @@ import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;
 
-public class DEAlib_PolygonWHeightAndCenterData {
+public class DEAlib_RingData {
 
-    public DEAlib_PolygonWHeightAndCenterData(Vector2f center, float sides, float circleAngle, float height, java.awt.Color lineColor) {
+    public DEAlib_RingData(Vector2f center, float segments, float circleAngle, float height,float lineWidth, java.awt.Color lineColor) {
         this.center = center;
-        this.sides = sides;
+        this.segments = segments;
         this.circleAngle = circleAngle;
         this.height = height;
+        this.lineWidth = lineWidth;
         this.lineColor = lineColor;
     }
 
     public Vector2f center;
-    public float sides;
+    public float segments;
     public float circleAngle;
     public float height;
+    public float lineWidth;
     public Color lineColor;
 
 }

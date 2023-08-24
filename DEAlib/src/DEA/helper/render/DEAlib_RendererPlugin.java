@@ -1,5 +1,6 @@
 package DEA.helper.render;
 
+import DEA.helper.DEAlib_Logger;
 import DEA.helper.render.renderClassesFolder.*;
 import cmu.gui.CMUKitUI;
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin;
@@ -41,9 +42,12 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
 
     private List<DEAlib_LineData> lines;
     private List<DEAlib_LineWWidthData> lineWWidths;
-    private List<DEAlib_PolygonWHeightAndCenterData> PolygonWHeightAndCenters;
+    private List<DEAlib_RingData> RingData;
     private List<DEAlib_BoxData> BoxDatas;
     private List<DEAlib_PolygonData> PolygonData;
+    private List<DEAlib_CircleData> CircleData;
+    private List<DEAlib_SphereData> SphereData;
+//    private List<DEAlib_CustomFunctionData> CustomFunctionData;
 
     @Override
     public void render(CombatEngineLayers layer, ViewportAPI viewport) {
@@ -92,10 +96,10 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
                 }
             }
 
-            if (PolygonWHeightAndCenters != null) {
-                if (PolygonWHeightAndCenters.size() != 0) {
-                    for (DEAlib_PolygonWHeightAndCenterData PolygonWHeightAndCenter : PolygonWHeightAndCenters) {
-                        DEAlib_RenderPluginFunctions.DEAlib_DrawPolygonWHeightAndCenter(PolygonWHeightAndCenter.center, PolygonWHeightAndCenter.sides, PolygonWHeightAndCenter.circleAngle, PolygonWHeightAndCenter.height, PolygonWHeightAndCenter.lineColor, viewport);
+            if (RingData != null) {
+                if (RingData.size() != 0) {
+                    for (DEAlib_RingData Ring : RingData) {
+                        DEAlib_RenderPluginFunctions.DEAlib_DrawRing(Ring.center, Ring.segments, Ring.circleAngle, Ring.height, Ring.lineWidth, Ring.lineColor, viewport);
                     }
                 }
             }
@@ -103,7 +107,7 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
             if (BoxDatas != null) {
                 if (BoxDatas.size() != 0) {
                     for (DEAlib_BoxData BoxData : BoxDatas) {
-                        DEAlib_RenderPluginFunctions.DEAlib_DrawBox(BoxData.leftTop, BoxData.rightTop, BoxData.leftBottom, BoxData.rightBottom, BoxData.lineColor, BoxData.PolygonModeMode, viewport);
+                        DEAlib_RenderPluginFunctions.DEAlib_DrawBox(BoxData.leftTop, BoxData.rightTop, BoxData.leftBottom, BoxData.rightBottom, BoxData.lineColor, BoxData.filled, viewport);
                     }
                 }
             }
@@ -111,10 +115,48 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
             if (PolygonData != null) {
                 if (PolygonData.size() != 0) {
                     for (DEAlib_PolygonData polygon : PolygonData) {
-                        DEAlib_RenderPluginFunctions.DEA_DrawPolygon(polygon.vector2fList, polygon.colorList, polygon.PolygonModeMode, viewport);
+                        DEAlib_RenderPluginFunctions.DEA_DrawPolygon(polygon.vector2fList, polygon.colorList, polygon.filled, viewport);
                     }
                 }
             }
+
+            if (CircleData != null) {
+                if (CircleData.size() != 0) {
+                    for (DEAlib_CircleData circle : CircleData) {
+                        DEAlib_RenderPluginFunctions.drawCircle(circle.Center, circle.raidus, circle.numSegments, circle.filled, circle.circleColor, viewport);
+                    }
+                }
+            }
+
+            //dont use this
+            if (SphereData != null) {
+                if (SphereData.size() != 0) {
+                    for (DEAlib_SphereData sphere : SphereData) {
+
+//                        DEAlib_Sphere sphere1 = new DEAlib_Sphere(sphere.numTriangles, sphere.center, sphere.height, sphere.width, sphere.texture, viewport);//this does all the work, see the script
+//
+//                        sphere1.render();
+//DO NOT USE THİS game doesnt allow using spheres on combat because fuck you  (afai tested ofc which was like a day, if you manage to do it ping me @.7556 i wanna see how you made it)
+                        DEAlib_SphereWGLU.DEAlib_Sphere(sphere.center, sphere.radius, sphere.slices, sphere.stacks, sphere.sphere, sphere.texture, viewport);
+
+
+                    }
+                }
+            }
+
+//this shit doesnt work for "secuwity weasowns" or because of skill issue
+//            if (CustomFunctionData != null) {
+//                if (CustomFunctionData.size() != 0) {
+//                    for (DEAlib_CustomFunctionData function : CustomFunctionData) {
+//                        try {
+//                            function.TheClass.getMethod(function.MethodName, function.cArgs).invoke(null, function.Variables);
+//                        } catch (Exception ex) {
+//                            DEAlib_Logger.DEA_log(DEAlib_RendererPlugin.class, function.TheClass.toString() + " RENDER PLUGIN(İ) ERROR crashed at function " + function.MethodName.toString(), "\nREASON: " + ex.toString());
+//                        }
+//                    }
+//                }
+//            }
+
 
 //            glEnable(GL_TEXTURE_2D);
 
@@ -132,25 +174,33 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
         }
     }
 
-    public void DEAlib_DrawLineInPlugin(List<DEAlib_LineData> lines) {
+    public void DEAlib_LineInPlugin(List<DEAlib_LineData> lines) {
         this.lines = lines;
     }
 
-    public void DEAlib_DrawLineWWidthInPlugin(List<DEAlib_LineWWidthData> lineWWidths) {
+    public void DEAlib_LineWWidthInPlugin(List<DEAlib_LineWWidthData> lineWWidths) {
         this.lineWWidths = lineWWidths;
     }
 
 
-    public void DEAlib_DrawPolygonWHeightAndCenter(List<DEAlib_PolygonWHeightAndCenterData> PolygonWHeightAndCenters) {
-        this.PolygonWHeightAndCenters = PolygonWHeightAndCenters;
+    public void DEAlib_Ring(List<DEAlib_RingData> RingData) {
+        this.RingData = RingData;
     }
 
-    public void DEAlib_DrawBoxInPlugin(List<DEAlib_BoxData> BoxDatas) {
+    public void DEAlib_BoxInPlugin(List<DEAlib_BoxData> BoxDatas) {
         this.BoxDatas = BoxDatas;
     }
 
     public void DEAlib_PolygonInPlugin(List<DEAlib_PolygonData> PolygonData) {
         this.PolygonData = PolygonData;
+    }
+
+    public void DEAlib_CircleInPlugin(List<DEAlib_CircleData> CircleData) {
+        this.CircleData = CircleData;
+    }
+
+    public void DEAlib_SphereInPlugin(List<DEAlib_SphereData> SphereData) {
+        this.SphereData = SphereData;
     }
 
     public void DEAlib_ChangeRenderLayerInPlugin(CombatEngineLayers LAYER) {

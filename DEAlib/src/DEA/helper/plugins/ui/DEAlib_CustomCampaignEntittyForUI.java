@@ -4,25 +4,29 @@ import DEA.helper.render.DEAlib_RenderPluginFunctions;
 import DEA.helper.render.renderClassesFolder.DEAlib_BoxData;
 import DEA.helper.render.renderClassesFolder.DEAlib_LineData;
 import DEA.helper.render.renderClassesFolder.DEAlib_LineWWidthData;
-import DEA.helper.render.renderClassesFolder.DEAlib_PolygonWHeightAndCenterData;
+import DEA.helper.render.renderClassesFolder.DEAlib_RingData;
 import cmu.gui.CMUKitUI;
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CampaignEngineLayers;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
-import com.fs.starfarer.api.combat.CombatEngineLayers;
 import com.fs.starfarer.api.combat.ViewportAPI;
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin;
-import com.fs.starfarer.campaign.CampaignEntity;
-import com.fs.starfarer.campaign.CustomCampaignEntity;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.lwjgl.opengl.GL11.*;
 
 public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
 
     public DEAlib_CustomCampaignEntittyForUI(SectorEntityToken plugin) {
         this.entity = plugin;
+    }
+
+    @Override
+    public void advance(float amount) {
+
+//        Global.getSector().getPlayerFleet().addFloatingText("" + amount, Color.BLACK, amount);
+
     }
 
     public DEAlib_CustomCampaignEntittyForUI() {
@@ -32,11 +36,12 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
 
     private HashMap<String, DEAlib_LineData> lines;
     private HashMap<String, DEAlib_LineWWidthData> lineWWidths;
-    private HashMap<String, DEAlib_PolygonWHeightAndCenterData> PolygonWHeightAndCenters;
+    private HashMap<String, DEAlib_RingData> PolygonWHeightAndCenters;
     private HashMap<String, DEAlib_BoxData> boxDatas;
 
     @Override
     public void init(SectorEntityToken entity, Object pluginParams) {
+        super.init(entity, pluginParams);
         this.entity = entity;
     }
 
@@ -59,6 +64,8 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
     public void render(CampaignEngineLayers layer, ViewportAPI viewport) {
         //this shit doesnt even run and GOD KNOWS WHY İT DOESNT HELP AAAAAAAAAA
         //its probably about the frenching init but i dont know what the hell to put in it because its a froaping OBJECT how the f am i suppose to know what to put there? int? string? float? AAAAAAAAAAAAAAAAAAAAAAAAAAA
+//it might not be because of init cuz yk, the params are probably unneccessary
+
 
         CMUKitUI.openGLForMisc();
 
@@ -82,8 +89,8 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
 
         if (PolygonWHeightAndCenters != null) {
             if (PolygonWHeightAndCenters.size() != 0) {
-                for (Map.Entry<String, DEAlib_PolygonWHeightAndCenterData> PolygonWHeightAndCenter : PolygonWHeightAndCenters.entrySet()) {
-                    DEAlib_RenderPluginFunctions.DEAlib_DrawPolygonWHeightAndCenter(PolygonWHeightAndCenter.getValue().center, PolygonWHeightAndCenter.getValue().sides, PolygonWHeightAndCenter.getValue().circleAngle, PolygonWHeightAndCenter.getValue().height, PolygonWHeightAndCenter.getValue().lineColor, viewport);
+                for (Map.Entry<String, DEAlib_RingData> PolygonWHeightAndCenter : PolygonWHeightAndCenters.entrySet()) {
+                    DEAlib_RenderPluginFunctions.DEAlib_DrawRing(PolygonWHeightAndCenter.getValue().center, PolygonWHeightAndCenter.getValue().segments, PolygonWHeightAndCenter.getValue().circleAngle, PolygonWHeightAndCenter.getValue().height, PolygonWHeightAndCenter.getValue().lineWidth, PolygonWHeightAndCenter.getValue().lineColor, viewport);
                 }
             }
         }
@@ -91,7 +98,7 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
         if (boxDatas != null) {
             if (boxDatas.size() != 0) {
                 for (Map.Entry<String, DEAlib_BoxData> BoxData : boxDatas.entrySet()) {
-                    DEAlib_RenderPluginFunctions.DEAlib_DrawBox(BoxData.getValue().leftTop, BoxData.getValue().rightTop, BoxData.getValue().leftBottom, BoxData.getValue().rightBottom, BoxData.getValue().lineColor, BoxData.getValue().PolygonModeMode, viewport);
+                    DEAlib_RenderPluginFunctions.DEAlib_DrawBox(BoxData.getValue().leftTop, BoxData.getValue().rightTop, BoxData.getValue().leftBottom, BoxData.getValue().rightBottom, BoxData.getValue().lineColor, BoxData.getValue().filled, viewport);
                 }
             }
         }
@@ -126,10 +133,11 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
         this.lineWWidths.putAll(lineWWidths);
     }
 
-    public void DEAlib_DrawPolygonWHeightAndCenter(HashMap<String, DEAlib_PolygonWHeightAndCenterData> PolygonWHeightAndCenters) {
-        if (PolygonWHeightAndCenters == null) this.PolygonWHeightAndCenters = new HashMap<String, DEAlib_PolygonWHeightAndCenterData>();
+    public void DEAlib_DrawPolygonWHeightAndCenter(HashMap<String, DEAlib_RingData> PolygonWHeightAndCenters) {
+        if (PolygonWHeightAndCenters == null)
+            this.PolygonWHeightAndCenters = new HashMap<String, DEAlib_RingData>();
         this.PolygonWHeightAndCenters.clear();
-        this.PolygonWHeightAndCenters = new HashMap<String, DEAlib_PolygonWHeightAndCenterData>();
+        this.PolygonWHeightAndCenters = new HashMap<String, DEAlib_RingData>();
         this.PolygonWHeightAndCenters.putAll(PolygonWHeightAndCenters);
     }
 

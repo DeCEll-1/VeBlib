@@ -54,7 +54,7 @@ public class DEAlib_ModPlugin extends BaseModPlugin {
                 new Vector2f(viewport.convertScreenXToWorldX(0), viewport.convertScreenYToWorldY(0)),
                 new Vector2f(viewport.convertScreenXToWorldX(1), viewport.convertScreenYToWorldY(0)),
                 Color.white,
-                GL11.GL_FILL
+                true
         );
 
         HashMap<String, DEAlib_BoxData> y = new HashMap<>();

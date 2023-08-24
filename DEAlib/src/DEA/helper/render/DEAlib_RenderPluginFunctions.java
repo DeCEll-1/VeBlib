@@ -3,11 +3,18 @@ package DEA.helper.render;
 import DEA.helper.DEAlib_Logger;
 import DEA.helper.DEAlib_VectorHelper;
 import DEA.helper.helperHelperClasses.DEAlib_TriangleData;
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.combat.ViewportAPI;
+import com.fs.starfarer.api.graphics.SpriteAPI;
+import org.lazywizard.lazylib.LazyLib;
 import org.lazywizard.lazylib.MathUtils;
 import org.lazywizard.lazylib.VectorUtils;
+import org.lazywizard.lazylib.opengl.DrawUtils;
 import org.lwjgl.util.vector.Vector2f;
+import org.magiclib.util.MagicRender;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.util.*;
 import java.awt.*;
 import java.util.List;
@@ -25,16 +32,18 @@ public class DEAlib_RenderPluginFunctions {
      * MAX SİDES İS 360F the method wont do anything if you put more than that and return false</br>
      *
      * @param center      center of the circle
-     * @param sides       amount of sides the "circle" will have
+     * @param segments       amount of sides the "circle" will have
      * @param circleAngle angle of the circle, yk i named this circle but you can use this to make triangles and stuff too so thats for this, can be 0 but cant be more than 360
      * @param height      height of the circle
+     * @param lineWidth      height of the circle
      * @param lineColor   color of the line
      */
-    public static void DEAlib_DrawPolygonWHeightAndCenter(Vector2f center, float sides, float circleAngle, float height, java.awt.Color lineColor, ViewportAPI viewport) {
+    public static void DEAlib_DrawRing(Vector2f center, float segments, float circleAngle, float height,float lineWidth, java.awt.Color lineColor, ViewportAPI viewport) {
 
 //        StarSystemAPI jsut change the location of the system
 
-        if (sides > 360f || circleAngle > 360f) {
+
+        if (segments > 360f || circleAngle > 360f) {
 //            return "DEA_ERROR please put less than 360 and more than 0";
             return;
         }
@@ -48,17 +57,24 @@ public class DEAlib_RenderPluginFunctions {
         from = MathUtils.getPointOnCircumference(center, height, circleAngle);
         int z = 0;
 
-        for (float i = circleAngle; i < circleAngle + 360 + sides; i += 360 / sides) {
+        for (float i = circleAngle; i < circleAngle + 360 + segments; i += 360 / segments) {
             if (z % 2 == 0) {
                 to = MathUtils.getPointOnCircumference(center, height, i);
             } else {
                 from = MathUtils.getPointOnCircumference(center, height, i);
             }
-            DEAlib_RenderPluginFunctions.DEAlib_DrawLineWWidthForPlugin(from, to, 4f, lineColor, viewport);//400 makes orbiting lines same for -400//doesnt work rn
+            DEAlib_RenderPluginFunctions.DEAlib_DrawLineWWidthForPlugin(from, to, lineWidth, lineColor, viewport);//400 makes orbiting lines same for -400//doesnt work rn
             z++;
         }
     }
 
+    /**
+     * draws a line, not suggested because you cant change width just use DEAlib_DrawLineWWidthForPlugin
+     *
+     * @param from      start of the line
+     * @param to        end of the line
+     * @param lineColor color of the line
+     */
     public static void DEAlib_DrawLineForPlugin(Vector2f from, Vector2f to, Color lineColor, ViewportAPI viewport) {
         glBegin(GL_LINE_STRIP);
 //
@@ -70,7 +86,8 @@ public class DEAlib_RenderPluginFunctions {
 //
 //        DEA_Logger.DEA_log(DEA_RenderPluginFunctions.class, "glGetFloat(GL_SMOOTH_LINE_WIDTH_RANGE) - ", String.valueOf(glGetFloat(GL_ALIASED_LINE_WIDTH_RANGE)));
 
-        glColor4f(255 / lineColor.getRed(), 255 / lineColor.getGreen(), 255 / lineColor.getBlue(), 255 / lineColor.getAlpha());
+        glColor4f(lineColor.getRed() / 255f, lineColor.getGreen() / 255f, lineColor.getBlue() / 255f, lineColor.getAlpha() / 255f);
+
 
         glVertex2f(viewport.convertWorldXtoScreenX(from.x), viewport.convertWorldYtoScreenY(from.y));
         glVertex2f(viewport.convertWorldXtoScreenX(to.x), viewport.convertWorldYtoScreenY(to.y));
@@ -79,6 +96,14 @@ public class DEAlib_RenderPluginFunctions {
 
     }
 
+    /**
+     * draws a line with width, thanks to the guy on usc that i forgot the name for the math :people_hugging:
+     *
+     * @param fromCenter start of the line
+     * @param toCenter   end of the line
+     * @param width      width
+     * @param lineColor  color of the line
+     */
     public static void DEAlib_DrawLineWWidthForPlugin(Vector2f fromCenter, Vector2f toCenter, float width, Color lineColor, ViewportAPI viewport) {
 
         float angle = VectorUtils.getAngle(fromCenter, toCenter);
@@ -95,7 +120,7 @@ public class DEAlib_RenderPluginFunctions {
 
 //        glColor4f(255 / lineColor.getRed(), 255 / lineColor.getGreen(), 255 / lineColor.getBlue(), 255 / lineColor.getAlpha());
 
-        DEAlib_DrawBox(leftTop, rightTop, leftBottom, rightBottom, lineColor, GL_FILL, viewport);
+        DEAlib_DrawBox(leftTop, rightTop, leftBottom, rightBottom, lineColor, true, viewport);
 
 //        glColor4f(1, 0, 0, 255 / lineColor.getAlpha());
 //
@@ -118,12 +143,27 @@ public class DEAlib_RenderPluginFunctions {
 
     }
 
-    public static void DEAlib_DrawBox(Vector2f leftTop, Vector2f rightTop, Vector2f leftBottom, Vector2f rightBottom, Color lineColor, int PolygonModeMode, ViewportAPI viewport) {
-        glPolygonMode(GL_FRONT_AND_BACK, PolygonModeMode);
+    /**
+     * put the locations in the correct order for it to work properly
+     *
+     * @param leftTop     leftTop
+     * @param rightTop    rightTop
+     * @param leftBottom  leftBottom
+     * @param rightBottom rightBottom
+     * @param filled      is filled?
+     * @param color       color
+     */
+    public static void DEAlib_DrawBox(Vector2f leftTop, Vector2f rightTop, Vector2f leftBottom, Vector2f rightBottom, Color color, boolean filled, ViewportAPI viewport) {
+        if (filled) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
         glDisable(GL_TEXTURE_2D);//doesnt work without this
         glBegin(GL_TRIANGLE_STRIP);
 
-        glColor4f(255 / lineColor.getRed(), 255 / lineColor.getGreen(), 255 / lineColor.getBlue(), 255 / lineColor.getAlpha());
+        glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+
         glVertex2f(viewport.convertWorldXtoScreenX(leftTop.x), viewport.convertWorldYtoScreenY(leftTop.y));
         glVertex2f(viewport.convertWorldXtoScreenX(rightTop.x), viewport.convertWorldYtoScreenY(rightTop.y));
         glVertex2f(viewport.convertWorldXtoScreenX(leftBottom.x), viewport.convertWorldYtoScreenY(leftBottom.y));
@@ -141,14 +181,27 @@ public class DEAlib_RenderPluginFunctions {
 
     }
 
-    public static void DEA_DrawPolygon(List<Vector2f> vector2fList, List<Color> colorList, int PolygonModeMode, ViewportAPI viewport) {
+    /**
+     * makes a polygon with corners, can cause some lag. since this triangulation uses a middle point for triangulating stuff that haves holes will work wacky (if i could make a proper triangulation it wouldnt be a problem but i am shit at math this middle point one is made by chatgpt. (i tried making my own you can see the comments))
+     *
+     * @param vector2fList list of the corners of the polygon
+     * @param colorList    color list, so that you can just yk have gradients and stuff, might not work as expected because of shity triangulation script
+     *                     NOTE i will fix this thing and use a hash map instead of 2 lists for proper colors but its not now SO <b>colorList is not used right now</b>
+     *                     CURRENTLY JUST RED
+     * @param filled       is filled?
+     */
+    public static void DEA_DrawPolygon(List<Vector2f> vector2fList, List<Color> colorList, boolean filled, ViewportAPI viewport) {
 
 //        Vector2f middlePoint = DEAlib_VectorHelper.DEAlib_GetTheMiddlePointInAVector2fList(vector2fList);
 
 //        List<Vector2f> list = DEAlib_VectorHelper.DEAlib_ListVector2fsCounterClockwise(vector2fList);
 
 
-        glPolygonMode(GL_FRONT_AND_BACK, PolygonModeMode);
+        if (filled) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
         glDisable(GL_TEXTURE_2D);//doesnt work without this
         glBegin(GL_TRIANGLES);
 
@@ -207,12 +260,10 @@ public class DEAlib_RenderPluginFunctions {
         //region new
 
 
-
 //        List<DEAlib_TriangleData> triangles = new ArrayList<>();
 //        DEAlib_TriangleData currTriangle = new DEAlib_TriangleData(null, null, null);
 
         //i dont have any fucking idea on how this works i got this for from ai and it somehow works i dont give a fuck tho its 5 am it works
-
 
 
         //        for (Vector2f location : locations) {
@@ -281,5 +332,29 @@ public class DEAlib_RenderPluginFunctions {
         glEnable(GL_TEXTURE_2D);
 
     }
+
+    /**
+     * draw circle, the script uses lazy libs draw circle thx to him for the script :people_hugging:
+     *
+     * @param Center      center of the circle
+     * @param raidus      the raidus
+     * @param circleColor color of the circle
+     * @param numSegments the amount of sides the circle will have, higher numbers are more laggy so stick with low ones (dont mind it much tho :p)
+     * @param filled      is filled?
+     */
+    public static void drawCircle(Vector2f Center, float raidus, int numSegments, boolean filled, Color circleColor, ViewportAPI viewport) {
+        glDisable(GL_TEXTURE_2D);
+        glBegin(GL_LINE);
+
+        glColor4f(circleColor.getRed() / 255f, circleColor.getGreen() / 255f, circleColor.getBlue() / 255f, circleColor.getAlpha() / 255f);
+
+
+        DrawUtils.drawCircle(viewport.convertWorldXtoScreenX(Center.x), viewport.convertWorldYtoScreenY(Center.y), viewport.convertWorldWidthToScreenWidth(raidus), numSegments, filled);
+
+        glEnd();
+        glEnable(GL_TEXTURE_2D);
+    }
+
+
 
 }
