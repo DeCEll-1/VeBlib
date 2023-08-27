@@ -1,18 +1,16 @@
 package DEA.helper.plugins.ui;
 
 import DEA.helper.render.DEAlib_RenderPluginFunctions;
-import DEA.helper.render.renderClassesFolder.DEAlib_BoxData;
+import DEA.helper.render.renderClassesFolder.DEAlib_SquareData;
 import DEA.helper.render.renderClassesFolder.DEAlib_LineData;
 import DEA.helper.render.renderClassesFolder.DEAlib_LineWWidthData;
 import DEA.helper.render.renderClassesFolder.DEAlib_RingData;
 import cmu.gui.CMUKitUI;
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CampaignEngineLayers;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.combat.ViewportAPI;
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +35,7 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
     private HashMap<String, DEAlib_LineData> lines;
     private HashMap<String, DEAlib_LineWWidthData> lineWWidths;
     private HashMap<String, DEAlib_RingData> PolygonWHeightAndCenters;
-    private HashMap<String, DEAlib_BoxData> boxDatas;
+    private HashMap<String, DEAlib_SquareData> boxDatas;
 
     @Override
     public void init(SectorEntityToken entity, Object pluginParams) {
@@ -97,8 +95,8 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
 
         if (boxDatas != null) {
             if (boxDatas.size() != 0) {
-                for (Map.Entry<String, DEAlib_BoxData> BoxData : boxDatas.entrySet()) {
-                    DEAlib_RenderPluginFunctions.DEAlib_DrawBox(BoxData.getValue().leftTop, BoxData.getValue().rightTop, BoxData.getValue().leftBottom, BoxData.getValue().rightBottom, BoxData.getValue().lineColor, BoxData.getValue().filled, viewport);
+                for (Map.Entry<String, DEAlib_SquareData> BoxData : boxDatas.entrySet()) {
+                    DEAlib_RenderPluginFunctions.DEAlib_DrawSquare(BoxData.getValue().leftTop, BoxData.getValue().rightTop, BoxData.getValue().leftBottom, BoxData.getValue().rightBottom, BoxData.getValue().lineColor, BoxData.getValue().filled, viewport);
                 }
             }
         }
@@ -141,10 +139,10 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
         this.PolygonWHeightAndCenters.putAll(PolygonWHeightAndCenters);
     }
 
-    public void DEAlib_DrawBoxIn(HashMap<String, DEAlib_BoxData> DEA_BoxDatas) {
-        if (boxDatas == null) this.boxDatas = new HashMap<String, DEAlib_BoxData>();
+    public void DEAlib_DrawBoxIn(HashMap<String, DEAlib_SquareData> DEA_BoxDatas) {
+        if (boxDatas == null) this.boxDatas = new HashMap<String, DEAlib_SquareData>();
         this.boxDatas.clear();
-        this.boxDatas = new HashMap<String, DEAlib_BoxData>();
+        this.boxDatas = new HashMap<String, DEAlib_SquareData>();
         this.boxDatas.putAll(DEA_BoxDatas);
     }
 

@@ -1,21 +1,14 @@
 package DEA.helper.render;
 
-import DEA.helper.DEAlib_Logger;
 import DEA.helper.DEAlib_VectorHelper;
-import DEA.helper.helperHelperClasses.DEAlib_TriangleData;
-import com.fs.starfarer.api.Global;
+import cmu.gui.CMUKitUI;
 import com.fs.starfarer.api.combat.ViewportAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
-import org.lazywizard.lazylib.LazyLib;
 import org.lazywizard.lazylib.MathUtils;
 import org.lazywizard.lazylib.VectorUtils;
 import org.lazywizard.lazylib.opengl.DrawUtils;
 import org.lwjgl.util.vector.Vector2f;
-import org.magiclib.util.MagicRender;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.util.*;
 import java.awt.*;
 import java.util.List;
 
@@ -32,13 +25,13 @@ public class DEAlib_RenderPluginFunctions {
      * MAX SİDES İS 360F the method wont do anything if you put more than that and return false</br>
      *
      * @param center      center of the circle
-     * @param segments       amount of sides the "circle" will have
+     * @param segments    amount of sides the "circle" will have
      * @param circleAngle angle of the circle, yk i named this circle but you can use this to make triangles and stuff too so thats for this, can be 0 but cant be more than 360
      * @param height      height of the circle
-     * @param lineWidth      height of the circle
+     * @param lineWidth   height of the circle
      * @param lineColor   color of the line
      */
-    public static void DEAlib_DrawRing(Vector2f center, float segments, float circleAngle, float height,float lineWidth, java.awt.Color lineColor, ViewportAPI viewport) {
+    public static void DEAlib_DrawRing(Vector2f center, float segments, float circleAngle, float height, float lineWidth, java.awt.Color lineColor, ViewportAPI viewport) {
 
 //        StarSystemAPI jsut change the location of the system
 
@@ -120,7 +113,7 @@ public class DEAlib_RenderPluginFunctions {
 
 //        glColor4f(255 / lineColor.getRed(), 255 / lineColor.getGreen(), 255 / lineColor.getBlue(), 255 / lineColor.getAlpha());
 
-        DEAlib_DrawBox(leftTop, rightTop, leftBottom, rightBottom, lineColor, true, viewport);
+        DEAlib_DrawSquare(leftTop, rightTop, leftBottom, rightBottom, lineColor, true, viewport);
 
 //        glColor4f(1, 0, 0, 255 / lineColor.getAlpha());
 //
@@ -153,7 +146,7 @@ public class DEAlib_RenderPluginFunctions {
      * @param filled      is filled?
      * @param color       color
      */
-    public static void DEAlib_DrawBox(Vector2f leftTop, Vector2f rightTop, Vector2f leftBottom, Vector2f rightBottom, Color color, boolean filled, ViewportAPI viewport) {
+    public static void DEAlib_DrawSquare(Vector2f leftTop, Vector2f rightTop, Vector2f leftBottom, Vector2f rightBottom, Color color, boolean filled, ViewportAPI viewport) {
         if (filled) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         } else {
@@ -180,6 +173,73 @@ public class DEAlib_RenderPluginFunctions {
         glEnable(GL_TEXTURE_2D);
 
     }
+
+    /**
+     * put the locations in the correct order for it to work properly <br>
+     * 1---2<br>
+     * &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;|<br>
+     * 3---4<br>
+     *
+     * @param leftTop     leftTop
+     * @param rightTop    rightTop
+     * @param leftBottom  leftBottom
+     * @param rightBottom rightBottom
+     * @param filled      is filled?
+     * @param color       color
+     * @param texture     texture
+     */
+    public static void DEAlib_DrawSquare(Vector2f leftTop, Vector2f rightTop, Vector2f leftBottom, Vector2f rightBottom, Color color, boolean filled, SpriteAPI texture, ViewportAPI viewport) {
+
+
+//        if (true) return;
+
+        if (filled) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        texture.bindTexture();
+        glDisable(GL_TEXTURE_2D);//doesnt work without this
+        glBegin(GL_TRIANGLE_STRIP);
+
+
+        glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+
+        glTexCoord2f(1f, 1f);
+        glVertex2f(viewport.convertWorldXtoScreenX(leftTop.x), viewport.convertWorldYtoScreenY(leftTop.y));
+
+        glTexCoord2f(0f, 1f);
+        glVertex2f(viewport.convertWorldXtoScreenX(rightTop.x), viewport.convertWorldYtoScreenY(rightTop.y));
+
+        glTexCoord2f(0f, 0f);
+        glVertex2f(viewport.convertWorldXtoScreenX(leftBottom.x), viewport.convertWorldYtoScreenY(leftBottom.y));
+
+        glTexCoord2f(1f, 0f);
+        glVertex2f(viewport.convertWorldXtoScreenX(rightBottom.x), viewport.convertWorldYtoScreenY(rightBottom.y));
+
+
+        glEnd();
+//        glFlush();
+        glEnable(GL_TEXTURE_2D);
+
+
+
+        CMUKitUI.closeGLForMisc();
+        try {
+            texture.setWidth(MathUtils.getDistance(leftBottom, rightBottom));
+
+            texture.setHeight(MathUtils.getDistance(leftBottom, leftTop));
+
+            texture.render(leftBottom.x, leftBottom.y);
+
+        } catch (Exception ex) {
+        } finally {
+            CMUKitUI.openGLForMisc();
+        }
+
+
+    }
+
 
     /**
      * makes a polygon with corners, can cause some lag. since this triangulation uses a middle point for triangulating stuff that haves holes will work wacky (if i could make a proper triangulation it wouldnt be a problem but i am shit at math this middle point one is made by chatgpt. (i tried making my own you can see the comments))
@@ -355,6 +415,34 @@ public class DEAlib_RenderPluginFunctions {
         glEnable(GL_TEXTURE_2D);
     }
 
+    public static void DEAlib_DrawTriangle(Vector2f corner1, Vector2f corner2, Vector2f corner3, Color color, boolean filled, ViewportAPI viewport) {
+
+        if (filled) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        glDisable(GL_TEXTURE_2D);//doesnt work without this
+        glBegin(GL_TRIANGLES);
+
+        glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+
+        glVertex2f(viewport.convertWorldXtoScreenX(corner1.x), viewport.convertWorldYtoScreenY(corner1.y));
+        glVertex2f(viewport.convertWorldXtoScreenX(corner2.x), viewport.convertWorldYtoScreenY(corner2.y));
+        glVertex2f(viewport.convertWorldXtoScreenX(corner3.x), viewport.convertWorldYtoScreenY(corner3.y));
+
+//        glEnd();
+
+//        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//        glBegin(GL_POLYGON);
+
+
+        glEnd();
+//        glFlush();
+        glEnable(GL_TEXTURE_2D);
+
+
+    }
 
 
 }

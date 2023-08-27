@@ -1,7 +1,7 @@
 package DEA.helper.scripts;
 
 import DEA.helper.plugins.ui.DEAlib_CustomCampaignEntittyForUI;
-import DEA.helper.render.renderClassesFolder.DEAlib_BoxData;
+import DEA.helper.render.renderClassesFolder.DEAlib_SquareData;
 import DEA.helper.render.renderClassesFolder.DEAlib_LineData;
 import DEA.helper.render.renderClassesFolder.DEAlib_LineWWidthData;
 import DEA.helper.render.renderClassesFolder.DEAlib_RingData;
@@ -20,7 +20,7 @@ public class DEAlib_EveryFrameScript implements EveryFrameScript {
     private HashMap<String, DEAlib_LineData> lines;
     private HashMap<String, DEAlib_LineWWidthData> lineWWidths;
     private HashMap<String, DEAlib_RingData> PolygonWHeightAndCenters;
-    private HashMap<String, DEAlib_BoxData> boxDatas;
+    private HashMap<String, DEAlib_SquareData> boxDatas;
 
     private boolean doOnce = true;
 
@@ -113,8 +113,8 @@ public class DEAlib_EveryFrameScript implements EveryFrameScript {
         }
     }
 
-    public void DEAlib_DrawBoxInPlugin(HashMap<String, DEAlib_BoxData> DEA_BoxDatas) {
-        if (boxDatas == null) this.boxDatas = new HashMap<String, DEAlib_BoxData>();
+    public void DEAlib_DrawBoxInPlugin(HashMap<String, DEAlib_SquareData> DEA_BoxDatas) {
+        if (boxDatas == null) this.boxDatas = new HashMap<String, DEAlib_SquareData>();
         this.boxDatas.putAll(DEA_BoxDatas);
     }
 

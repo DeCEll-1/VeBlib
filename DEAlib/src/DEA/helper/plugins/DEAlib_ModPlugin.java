@@ -2,7 +2,7 @@ package DEA.helper.plugins;
 
 import DEA.helper.DEAlib_Logger;
 import DEA.helper.plugins.pluginFiles.systemFiles.*;
-import DEA.helper.render.renderClassesFolder.DEAlib_BoxData;
+import DEA.helper.render.renderClassesFolder.DEAlib_SquareData;
 import DEA.helper.scripts.DEAlib_EveryFrameScript;
 import com.fs.starfarer.api.BaseModPlugin;
 import com.fs.starfarer.api.Global;
@@ -10,7 +10,6 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.combat.ViewportAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Terrain;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;
@@ -48,7 +47,7 @@ public class DEAlib_ModPlugin extends BaseModPlugin {
 
         ViewportAPI viewport = Global.getSector().getViewport();
 
-        DEAlib_BoxData box = new DEAlib_BoxData(
+        DEAlib_SquareData box = new DEAlib_SquareData(
                 new Vector2f(viewport.convertScreenXToWorldX(0), viewport.convertScreenYToWorldY(1)),
                 new Vector2f(viewport.convertScreenXToWorldX(1), viewport.convertScreenYToWorldY(1)),
                 new Vector2f(viewport.convertScreenXToWorldX(0), viewport.convertScreenYToWorldY(0)),
@@ -57,7 +56,7 @@ public class DEAlib_ModPlugin extends BaseModPlugin {
                 true
         );
 
-        HashMap<String, DEAlib_BoxData> y = new HashMap<>();
+        HashMap<String, DEAlib_SquareData> y = new HashMap<>();
 
         y.put("DEAlib_TestBox", box);
 

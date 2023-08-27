@@ -1,6 +1,5 @@
 package DEA.helper.render;
 
-import DEA.helper.DEAlib_Logger;
 import DEA.helper.render.renderClassesFolder.*;
 import cmu.gui.CMUKitUI;
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin;
@@ -43,7 +42,8 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
     private List<DEAlib_LineData> lines;
     private List<DEAlib_LineWWidthData> lineWWidths;
     private List<DEAlib_RingData> RingData;
-    private List<DEAlib_BoxData> BoxDatas;
+    private List<DEAlib_SquareData> SquareDatas;
+    private List<DEAlib_TriangleData> TriangleDatas;
     private List<DEAlib_PolygonData> PolygonData;
     private List<DEAlib_CircleData> CircleData;
     private List<DEAlib_SphereData> SphereData;
@@ -104,10 +104,23 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
                 }
             }
 
-            if (BoxDatas != null) {
-                if (BoxDatas.size() != 0) {
-                    for (DEAlib_BoxData BoxData : BoxDatas) {
-                        DEAlib_RenderPluginFunctions.DEAlib_DrawBox(BoxData.leftTop, BoxData.rightTop, BoxData.leftBottom, BoxData.rightBottom, BoxData.lineColor, BoxData.filled, viewport);
+            if (SquareDatas != null) {
+                if (SquareDatas.size() != 0) {
+                    for (DEAlib_SquareData square : SquareDatas) {
+                        if (square.texture == null) {
+                            DEAlib_RenderPluginFunctions.DEAlib_DrawSquare(square.leftTop, square.rightTop, square.leftBottom, square.rightBottom, square.lineColor, square.filled, viewport);
+                        } else {
+                            DEAlib_RenderPluginFunctions.DEAlib_DrawSquare(square.leftTop, square.rightTop, square.leftBottom, square.rightBottom, square.lineColor, square.filled, square.texture, viewport);
+                        }
+
+                    }
+                }
+            }
+
+            if (TriangleDatas != null) {
+                if (TriangleDatas.size() != 0) {
+                    for (DEAlib_TriangleData triangle : TriangleDatas) {
+                        DEAlib_RenderPluginFunctions.DEAlib_DrawTriangle(triangle.corner1, triangle.corner2, triangle.corner3, triangle.color, triangle.filled, viewport);
                     }
                 }
             }
@@ -187,8 +200,12 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
         this.RingData = RingData;
     }
 
-    public void DEAlib_BoxInPlugin(List<DEAlib_BoxData> BoxDatas) {
-        this.BoxDatas = BoxDatas;
+    public void DEAlib_SquareInPlugin(List<DEAlib_SquareData> BoxDatas) {
+        this.SquareDatas = BoxDatas;
+    }
+
+    public void DEAlib_TriangleInPlugin(List<DEAlib_TriangleData> TriangleDatas) {
+        this.TriangleDatas = TriangleDatas;
     }
 
     public void DEAlib_PolygonInPlugin(List<DEAlib_PolygonData> PolygonData) {

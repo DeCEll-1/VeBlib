@@ -2,7 +2,6 @@ package DEA.helper;
 
 import DEA.helper.geometry.DEAlib_ClockwiseWinding;
 import DEA.helper.geometry.DEAlib_PolygonTriangulation;
-import DEA.helper.helperHelperClasses.DEAlib_TriangleData;
 import org.lazywizard.lazylib.VectorUtils;
 import org.lwjgl.util.vector.Vector2f;
 
