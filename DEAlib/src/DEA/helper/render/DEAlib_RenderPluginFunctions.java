@@ -31,7 +31,8 @@ public class DEAlib_RenderPluginFunctions {
      * @param lineWidth   height of the circle
      * @param lineColor   color of the line
      */
-    public static void DEAlib_DrawRing(Vector2f center, float segments, float circleAngle, float height, float lineWidth, java.awt.Color lineColor, ViewportAPI viewport) {
+    public static void DrawRing(Vector2f center, float segments, float circleAngle, float height, float lineWidth, java.awt.Color lineColor, ViewportAPI viewport) {
+        if (lineColor==null)return;
 
 //        StarSystemAPI jsut change the location of the system
 
@@ -56,7 +57,7 @@ public class DEAlib_RenderPluginFunctions {
             } else {
                 from = MathUtils.getPointOnCircumference(center, height, i);
             }
-            DEAlib_RenderPluginFunctions.DEAlib_DrawLineWWidthForPlugin(from, to, lineWidth, lineColor, viewport);//400 makes orbiting lines same for -400//doesnt work rn
+            DEAlib_RenderPluginFunctions.DrawLineWWidthForPlugin(from, to, lineWidth, lineColor, viewport);//400 makes orbiting lines same for -400//doesnt work rn
             z++;
         }
     }
@@ -68,7 +69,8 @@ public class DEAlib_RenderPluginFunctions {
      * @param to        end of the line
      * @param lineColor color of the line
      */
-    public static void DEAlib_DrawLineForPlugin(Vector2f from, Vector2f to, Color lineColor, ViewportAPI viewport) {
+    public static void DrawLineForPlugin(Vector2f from, Vector2f to, Color lineColor, ViewportAPI viewport) {
+        if (lineColor==null)return;
         glBegin(GL_LINE_STRIP);
 //
 //        FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(16);
@@ -97,7 +99,9 @@ public class DEAlib_RenderPluginFunctions {
      * @param width      width
      * @param lineColor  color of the line
      */
-    public static void DEAlib_DrawLineWWidthForPlugin(Vector2f fromCenter, Vector2f toCenter, float width, Color lineColor, ViewportAPI viewport) {
+    public static void DrawLineWWidthForPlugin(Vector2f fromCenter, Vector2f toCenter, float width, Color lineColor, ViewportAPI viewport) {
+
+        if (lineColor==null)return;
 
         float angle = VectorUtils.getAngle(fromCenter, toCenter);
 
@@ -113,7 +117,7 @@ public class DEAlib_RenderPluginFunctions {
 
 //        glColor4f(255 / lineColor.getRed(), 255 / lineColor.getGreen(), 255 / lineColor.getBlue(), 255 / lineColor.getAlpha());
 
-        DEAlib_DrawSquare(leftTop, rightTop, leftBottom, rightBottom, lineColor, true, viewport);
+        DrawSquare(leftTop, rightTop, leftBottom, rightBottom, lineColor, true, viewport);
 
 //        glColor4f(1, 0, 0, 255 / lineColor.getAlpha());
 //
@@ -137,7 +141,10 @@ public class DEAlib_RenderPluginFunctions {
     }
 
     /**
-     * put the locations in the correct order for it to work properly
+     * put the locations in the correct order for it to work properly<br>
+     * 1---2<br>
+     * &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;|<br>
+     * 3---4<br>
      *
      * @param leftTop     leftTop
      * @param rightTop    rightTop
@@ -146,7 +153,9 @@ public class DEAlib_RenderPluginFunctions {
      * @param filled      is filled?
      * @param color       color
      */
-    public static void DEAlib_DrawSquare(Vector2f leftTop, Vector2f rightTop, Vector2f leftBottom, Vector2f rightBottom, Color color, boolean filled, ViewportAPI viewport) {
+    public static void DrawSquare(Vector2f leftTop, Vector2f rightTop, Vector2f leftBottom, Vector2f rightBottom, Color color, boolean filled, ViewportAPI viewport) {
+        if (color == null) return;
+
         if (filled) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         } else {
@@ -188,8 +197,9 @@ public class DEAlib_RenderPluginFunctions {
      * @param color       color
      * @param texture     texture
      */
-    public static void DEAlib_DrawSquare(Vector2f leftTop, Vector2f rightTop, Vector2f leftBottom, Vector2f rightBottom, Color color, boolean filled, SpriteAPI texture, ViewportAPI viewport) {
+    public static void DrawSquare(Vector2f leftTop, Vector2f rightTop, Vector2f leftBottom, Vector2f rightBottom, Color color, boolean filled, SpriteAPI texture, ViewportAPI viewport) {
 
+        if (color == null) return;
 
 //        if (true) return;
 
@@ -223,7 +233,6 @@ public class DEAlib_RenderPluginFunctions {
         glEnable(GL_TEXTURE_2D);
 
 
-
         CMUKitUI.closeGLForMisc();
         try {
             texture.setWidth(MathUtils.getDistance(leftBottom, rightBottom));
@@ -240,7 +249,6 @@ public class DEAlib_RenderPluginFunctions {
 
     }
 
-
     /**
      * makes a polygon with corners, can cause some lag. since this triangulation uses a middle point for triangulating stuff that haves holes will work wacky (if i could make a proper triangulation it wouldnt be a problem but i am shit at math this middle point one is made by chatgpt. (i tried making my own you can see the comments))
      *
@@ -250,7 +258,8 @@ public class DEAlib_RenderPluginFunctions {
      *                     CURRENTLY JUST RED
      * @param filled       is filled?
      */
-    public static void DEA_DrawPolygon(List<Vector2f> vector2fList, List<Color> colorList, boolean filled, ViewportAPI viewport) {
+    public static void DrawPolygon(List<Vector2f> vector2fList, List<Color> colorList, boolean filled, ViewportAPI viewport) {
+        if (colorList == null) return;
 
 //        Vector2f middlePoint = DEAlib_VectorHelper.DEAlib_GetTheMiddlePointInAVector2fList(vector2fList);
 
@@ -371,7 +380,7 @@ public class DEAlib_RenderPluginFunctions {
 
 
         //region working one from chatgpt
-        List<Vector2f> locations = DEAlib_VectorHelper.DEAlib_Triangulate(vector2fList);
+        List<Vector2f> locations = DEAlib_VectorHelper.Triangulate(vector2fList);
 
 
         for (int i = 0; i < locations.size(); i += 3) {
@@ -403,6 +412,7 @@ public class DEAlib_RenderPluginFunctions {
      * @param filled      is filled?
      */
     public static void drawCircle(Vector2f Center, float raidus, int numSegments, boolean filled, Color circleColor, ViewportAPI viewport) {
+        if (circleColor == null) return;
         glDisable(GL_TEXTURE_2D);
         glBegin(GL_LINE);
 
@@ -415,7 +425,9 @@ public class DEAlib_RenderPluginFunctions {
         glEnable(GL_TEXTURE_2D);
     }
 
-    public static void DEAlib_DrawTriangle(Vector2f corner1, Vector2f corner2, Vector2f corner3, Color color, boolean filled, ViewportAPI viewport) {
+    public static void DrawTriangle(Vector2f corner1, Vector2f corner2, Vector2f corner3, Color color, boolean filled, ViewportAPI viewport) {
+
+        if (color == null) return;
 
         if (filled) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

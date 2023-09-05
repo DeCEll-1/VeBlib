@@ -13,9 +13,9 @@ import static org.lwjgl.opengl.GL11.*;
 public class AAAAAAAAAAAA {
 
     public void function(java.util.List<Vector2f> vector2fList, List<Color> colorList, int PolygonModeMode, ViewportAPI viewport){
-        vector2fList = DEAlib_VectorHelper.DEAlib_ListVector2fsClockwise(vector2fList);
+        vector2fList = DEAlib_VectorHelper.ListVector2fsClockwise(vector2fList);
 
-        Vector2f middlePoint = DEAlib_VectorHelper.DEAlib_GetTheMiddlePointInAVector2fList(vector2fList);
+        Vector2f middlePoint = DEAlib_VectorHelper.GetTheMiddlePointInAVector2fList(vector2fList);
 
 
         glPolygonMode(GL_FRONT_AND_BACK, PolygonModeMode);

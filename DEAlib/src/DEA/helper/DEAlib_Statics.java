@@ -7,8 +7,6 @@ import java.util.Random;
 
 public class DEAlib_Statics {
 
-    public static DEAlib_Helper dea_helper = new DEAlib_Helper();
-
     public static Random random = new Random();
 
 

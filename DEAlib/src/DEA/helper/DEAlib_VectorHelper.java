@@ -2,13 +2,9 @@ package DEA.helper;
 
 import DEA.helper.geometry.DEAlib_ClockwiseWinding;
 import DEA.helper.geometry.DEAlib_PolygonTriangulation;
-import org.lazywizard.lazylib.VectorUtils;
 import org.lwjgl.util.vector.Vector2f;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DEAlib_VectorHelper {
 
@@ -18,7 +14,7 @@ public class DEAlib_VectorHelper {
      * @param relived the list of vectors that will get ordered //dont mind the name
      * @return returns the "ordered" list of vectors
      */
-    public static List<Vector2f> DEAlib_ListVector2fsClockwise(List<Vector2f> relived) {
+    public static List<Vector2f> ListVector2fsClockwise(List<Vector2f> relived) {
 //region İ LOVE CHATGPT
 //
 //
@@ -94,30 +90,47 @@ public class DEAlib_VectorHelper {
      * <i><b>if 2 bounds are located in the same place it will return NaN and wont work</b></i>
      *
      * @param list list of the vectors to get the center of, only for vector2f
-     * @return returns the middle point
+     * @return if the list is 0 will return null, otherwise returns the middle point
      */
-    public static Vector2f DEAlib_GetTheMiddlePointInAVector2fList(List<Vector2f> list) {
+    public static Vector2f GetTheMiddlePointInAVector2fList(List<Vector2f> list) {
 
-        Vector2f middlePoint = null;
+        if (list.size() == 0) return null;
+
+        Vector2f totalVectorData = null;
 
         for (Vector2f location : list) {
 //gets the middle point
-            if (middlePoint == null) {
-                middlePoint = location;
+            if (totalVectorData == null) {
+                totalVectorData = location;
             } else {
-                middlePoint.x = (middlePoint.x + location.x) / 2;
-                middlePoint.y = (middlePoint.y + location.y) / 2;
+                totalVectorData.x = (totalVectorData.x + location.x);
+                totalVectorData.y = (totalVectorData.y + location.y);
             }
 
         }
-        return middlePoint;
+
+        Vector2f realVector = new Vector2f(totalVectorData.x / list.size(), totalVectorData.y / list.size());
+
+        return realVector;
     }
 
-    public static List<Vector2f> DEAlib_Triangulate(List<Vector2f> list) {
+    public static List<Vector2f> Triangulate(List<Vector2f> list) {
 
-        List<Vector2f> clockedList = DEAlib_VectorHelper.DEAlib_ListVector2fsClockwise(list);
+        List<Vector2f> clockedList = DEAlib_VectorHelper.ListVector2fsClockwise(list);
 
         return DEAlib_PolygonTriangulation.triangulate(clockedList);
+    }
+
+    public static Vector2f AvarageVectors(Vector2f firstVector, Vector2f secondVector) {
+
+        Vector2f avaragedVector = new Vector2f();
+
+
+        avaragedVector.x = (firstVector.x + secondVector.x) / 2f;
+        avaragedVector.y = (firstVector.y + secondVector.y) / 2f;
+
+        return avaragedVector;
+
     }
 
 

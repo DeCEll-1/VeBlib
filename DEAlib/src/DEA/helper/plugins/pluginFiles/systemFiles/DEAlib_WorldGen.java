@@ -1,6 +1,6 @@
 package DEA.helper.plugins.pluginFiles.systemFiles;
 
-import DEA.helper.plugins.DEAlib_SectorGenerationPlugin;
+import DEA.helper.plugins.SectorGenerationPlugin;
 import com.fs.starfarer.api.campaign.SectorAPI;
 import com.fs.starfarer.api.campaign.SectorGeneratorPlugin;
 
@@ -17,7 +17,7 @@ public class DEAlib_WorldGen implements SectorGeneratorPlugin {
     @Override
     public void generate(SectorAPI sector) {
 
-        DEAlib_SectorGenerationPlugin sectorGenerationPlugin = new DEAlib_SectorGenerationPlugin(starSystemDataList);
+        SectorGenerationPlugin sectorGenerationPlugin = new SectorGenerationPlugin(starSystemDataList);
 
         sectorGenerationPlugin.generate(sector);
     }

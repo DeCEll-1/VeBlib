@@ -71,7 +71,7 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
         if (lines != null) {
             if (lines.size() != 0) {
                 for (Map.Entry<String, DEAlib_LineData> line : lines.entrySet()) {
-                    DEAlib_RenderPluginFunctions.DEAlib_DrawLineForPlugin(line.getValue().from, line.getValue().to, line.getValue().lineColor, viewport);
+                    DEAlib_RenderPluginFunctions.DrawLineForPlugin(line.getValue().from, line.getValue().to, line.getValue().lineColor, viewport);
                 }
             }
         }
@@ -80,7 +80,7 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
 
             if (lineWWidths.size() != 0) {
                 for (Map.Entry<String, DEAlib_LineWWidthData> lineWWidth : lineWWidths.entrySet()) {
-                    DEAlib_RenderPluginFunctions.DEAlib_DrawLineWWidthForPlugin(lineWWidth.getValue().fromCenter, lineWWidth.getValue().toCenter, lineWWidth.getValue().width, lineWWidth.getValue().lineColor, viewport);
+                    DEAlib_RenderPluginFunctions.DrawLineWWidthForPlugin(lineWWidth.getValue().fromCenter, lineWWidth.getValue().toCenter, lineWWidth.getValue().width, lineWWidth.getValue().lineColor, viewport);
                 }
             }
         }
@@ -88,7 +88,7 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
         if (PolygonWHeightAndCenters != null) {
             if (PolygonWHeightAndCenters.size() != 0) {
                 for (Map.Entry<String, DEAlib_RingData> PolygonWHeightAndCenter : PolygonWHeightAndCenters.entrySet()) {
-                    DEAlib_RenderPluginFunctions.DEAlib_DrawRing(PolygonWHeightAndCenter.getValue().center, PolygonWHeightAndCenter.getValue().segments, PolygonWHeightAndCenter.getValue().circleAngle, PolygonWHeightAndCenter.getValue().height, PolygonWHeightAndCenter.getValue().lineWidth, PolygonWHeightAndCenter.getValue().lineColor, viewport);
+                    DEAlib_RenderPluginFunctions.DrawRing(PolygonWHeightAndCenter.getValue().center, PolygonWHeightAndCenter.getValue().segments, PolygonWHeightAndCenter.getValue().circleAngle, PolygonWHeightAndCenter.getValue().height, PolygonWHeightAndCenter.getValue().lineWidth, PolygonWHeightAndCenter.getValue().lineColor, viewport);
                 }
             }
         }
@@ -96,7 +96,7 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
         if (boxDatas != null) {
             if (boxDatas.size() != 0) {
                 for (Map.Entry<String, DEAlib_SquareData> BoxData : boxDatas.entrySet()) {
-                    DEAlib_RenderPluginFunctions.DEAlib_DrawSquare(BoxData.getValue().leftTop, BoxData.getValue().rightTop, BoxData.getValue().leftBottom, BoxData.getValue().rightBottom, BoxData.getValue().lineColor, BoxData.getValue().filled, viewport);
+                    DEAlib_RenderPluginFunctions.DrawSquare(BoxData.getValue().leftTop, BoxData.getValue().rightTop, BoxData.getValue().leftBottom, BoxData.getValue().rightBottom, BoxData.getValue().lineColor, BoxData.getValue().filled, viewport);
                 }
             }
         }
@@ -117,21 +117,21 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
         CMUKitUI.closeGLForMisc();
     }
 
-    public void DEAlib_DrawLineInPlugin(HashMap<String, DEAlib_LineData> lines) {
+    public void DrawLineInPlugin(HashMap<String, DEAlib_LineData> lines) {
         if (lines == null) this.lines = new HashMap<String, DEAlib_LineData>();
         this.lines.clear();
         this.lines = new HashMap<String, DEAlib_LineData>();
         this.lines.putAll(lines);
     }
 
-    public void DEAlib_DrawLineWWidth(HashMap<String, DEAlib_LineWWidthData> lineWWidths) {
+    public void DrawLineWWidth(HashMap<String, DEAlib_LineWWidthData> lineWWidths) {
         if (lineWWidths == null) this.lineWWidths = new HashMap<String, DEAlib_LineWWidthData>();
         this.lineWWidths.clear();
         this.lineWWidths = new HashMap<String, DEAlib_LineWWidthData>();
         this.lineWWidths.putAll(lineWWidths);
     }
 
-    public void DEAlib_DrawPolygonWHeightAndCenter(HashMap<String, DEAlib_RingData> PolygonWHeightAndCenters) {
+    public void DrawPolygonWHeightAndCenter(HashMap<String, DEAlib_RingData> PolygonWHeightAndCenters) {
         if (PolygonWHeightAndCenters == null)
             this.PolygonWHeightAndCenters = new HashMap<String, DEAlib_RingData>();
         this.PolygonWHeightAndCenters.clear();
@@ -139,7 +139,7 @@ public class DEAlib_CustomCampaignEntittyForUI extends BaseCustomEntityPlugin {
         this.PolygonWHeightAndCenters.putAll(PolygonWHeightAndCenters);
     }
 
-    public void DEAlib_DrawBoxIn(HashMap<String, DEAlib_SquareData> DEA_BoxDatas) {
+    public void DrawBoxIn(HashMap<String, DEAlib_SquareData> DEA_BoxDatas) {
         if (boxDatas == null) this.boxDatas = new HashMap<String, DEAlib_SquareData>();
         this.boxDatas.clear();
         this.boxDatas = new HashMap<String, DEAlib_SquareData>();

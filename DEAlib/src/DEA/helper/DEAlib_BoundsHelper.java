@@ -2,7 +2,6 @@ package DEA.helper;
 
 import com.fs.starfarer.api.combat.BoundsAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
-import com.fs.starfarer.ui.V;
 import org.lazywizard.lazylib.MathUtils;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -19,7 +18,7 @@ public class DEAlib_BoundsHelper {
      * @param ship the ship
      * @return if the proccess completed successfully returns the location of the bound,othervise null. so instead of crashing it just, doesnt work
      */
-    public static Vector2f DEAlib_GetRandomBoundLocation(ShipAPI ship) {
+    public static Vector2f GetRandomBoundLocation(ShipAPI ship) {
         try {
             BoundsAPI.SegmentAPI segment = ship.getExactBounds().getSegments().get(random.nextInt(ship.getExactBounds().getSegments().size()));
             Vector2f segmentLocation = MathUtils.getNearestPointOnLine(ship.getLocation(), segment.getP1(), segment.getP2());
@@ -35,7 +34,7 @@ public class DEAlib_BoundsHelper {
      * @param ship the ship
      * @return if the proccess completed successfully returns the location of the bound,othervise null. so instead of crashing it just, doesnt work
      */
-    public static List<Vector2f> DEAlib_GetListOfBoundLocations(ShipAPI ship) {
+    public static List<Vector2f> GetListOfBoundLocations(ShipAPI ship) {
         try {
 
             List<Vector2f> list = new ArrayList<>();

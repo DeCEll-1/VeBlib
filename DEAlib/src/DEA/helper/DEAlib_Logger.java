@@ -8,7 +8,7 @@ public class DEAlib_Logger {
      * logs stuff. <br/>
      * returns true if logged, othervise false
      */
-    public static boolean DEA_log(Class myClass, String val1, String val2, String val3) {
+    public static boolean log(Class myClass, String val1, String val2, String val3) {
         try {
             Global.getLogger(myClass).info(val1 + val2 + val3);
             return true;
@@ -21,7 +21,7 @@ public class DEAlib_Logger {
      * logs stuff. <br/>
      * returns true if logged, othervise false
      */
-    public static boolean DEA_log(Class myClass, String val1, String val2) {
+    public static boolean log(Class myClass, String val1, String val2) {
         try {
             Global.getLogger(myClass).info(val1+val2);
             return true;
@@ -34,7 +34,7 @@ public class DEAlib_Logger {
      * logs stuff. <br/>
      * returns true if logged, othervise false
      */
-    public static boolean DEA_log(Class myClass, String val1) {
+    public static boolean log(Class myClass, String val1) {
         try {
             Global.getLogger(myClass).info(val1);
             return true;

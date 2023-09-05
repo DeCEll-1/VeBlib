@@ -70,11 +70,11 @@ public class DEAlib_EveryFrameScript implements EveryFrameScript {
             doOnce = false;
         }
 
-        if (lines != null) CustomCampaignEntittyForUI.DEAlib_DrawLineInPlugin(lines);
-        if (lineWWidths != null) CustomCampaignEntittyForUI.DEAlib_DrawLineWWidth(lineWWidths);
+        if (lines != null) CustomCampaignEntittyForUI.DrawLineInPlugin(lines);
+        if (lineWWidths != null) CustomCampaignEntittyForUI.DrawLineWWidth(lineWWidths);
         if (PolygonWHeightAndCenters != null)
-            CustomCampaignEntittyForUI.DEAlib_DrawPolygonWHeightAndCenter(PolygonWHeightAndCenters);
-        if (boxDatas != null) CustomCampaignEntittyForUI.DEAlib_DrawBoxIn(boxDatas);
+            CustomCampaignEntittyForUI.DrawPolygonWHeightAndCenter(PolygonWHeightAndCenters);
+        if (boxDatas != null) CustomCampaignEntittyForUI.DrawBoxIn(boxDatas);
 
 
     }

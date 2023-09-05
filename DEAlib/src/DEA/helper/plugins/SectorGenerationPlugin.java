@@ -1,27 +1,23 @@
 package DEA.helper.plugins;
 
 import DEA.helper.plugins.pluginFiles.systemFiles.*;
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.campaign.econ.Industry;
-import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.econ.MarketConditionAPI;
 import com.fs.starfarer.api.campaign.econ.SubmarketAPI;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-public class DEAlib_SectorGenerationPlugin implements SectorGeneratorPlugin {
+public class SectorGenerationPlugin implements SectorGeneratorPlugin {
 
     public List<DEAlib_StarSystemData> starSystemDataList;
 
-    public DEAlib_SectorGenerationPlugin(List<DEAlib_StarSystemData> starSystemDataList) {
+    public SectorGenerationPlugin(List<DEAlib_StarSystemData> starSystemDataList) {
         this.starSystemDataList = starSystemDataList;
     }
 

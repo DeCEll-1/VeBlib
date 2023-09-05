@@ -82,7 +82,7 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
             if (lines != null) {
                 if (lines.size() != 0) {
                     for (DEAlib_LineData line : lines) {
-                        DEAlib_RenderPluginFunctions.DEAlib_DrawLineForPlugin(line.from, line.to, line.lineColor, viewport);
+                        DEAlib_RenderPluginFunctions.DrawLineForPlugin(line.from, line.to, line.lineColor, viewport);
                     }
                 }
             }
@@ -91,7 +91,7 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
 
                 if (lineWWidths.size() != 0) {
                     for (DEAlib_LineWWidthData lineWWidth : lineWWidths) {
-                        DEAlib_RenderPluginFunctions.DEAlib_DrawLineWWidthForPlugin(lineWWidth.fromCenter, lineWWidth.toCenter, lineWWidth.width, lineWWidth.lineColor, viewport);
+                        DEAlib_RenderPluginFunctions.DrawLineWWidthForPlugin(lineWWidth.fromCenter, lineWWidth.toCenter, lineWWidth.width, lineWWidth.lineColor, viewport);
                     }
                 }
             }
@@ -99,7 +99,7 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
             if (RingData != null) {
                 if (RingData.size() != 0) {
                     for (DEAlib_RingData Ring : RingData) {
-                        DEAlib_RenderPluginFunctions.DEAlib_DrawRing(Ring.center, Ring.segments, Ring.circleAngle, Ring.height, Ring.lineWidth, Ring.lineColor, viewport);
+                        DEAlib_RenderPluginFunctions.DrawRing(Ring.center, Ring.segments, Ring.circleAngle, Ring.height, Ring.lineWidth, Ring.lineColor, viewport);
                     }
                 }
             }
@@ -108,9 +108,9 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
                 if (SquareDatas.size() != 0) {
                     for (DEAlib_SquareData square : SquareDatas) {
                         if (square.texture == null) {
-                            DEAlib_RenderPluginFunctions.DEAlib_DrawSquare(square.leftTop, square.rightTop, square.leftBottom, square.rightBottom, square.lineColor, square.filled, viewport);
+                            DEAlib_RenderPluginFunctions.DrawSquare(square.leftTop, square.rightTop, square.leftBottom, square.rightBottom, square.lineColor, square.filled, viewport);
                         } else {
-                            DEAlib_RenderPluginFunctions.DEAlib_DrawSquare(square.leftTop, square.rightTop, square.leftBottom, square.rightBottom, square.lineColor, square.filled, square.texture, viewport);
+                            DEAlib_RenderPluginFunctions.DrawSquare(square.leftTop, square.rightTop, square.leftBottom, square.rightBottom, square.lineColor, square.filled, square.texture, viewport);
                         }
 
                     }
@@ -120,7 +120,7 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
             if (TriangleDatas != null) {
                 if (TriangleDatas.size() != 0) {
                     for (DEAlib_TriangleData triangle : TriangleDatas) {
-                        DEAlib_RenderPluginFunctions.DEAlib_DrawTriangle(triangle.corner1, triangle.corner2, triangle.corner3, triangle.color, triangle.filled, viewport);
+                        DEAlib_RenderPluginFunctions.DrawTriangle(triangle.corner1, triangle.corner2, triangle.corner3, triangle.color, triangle.filled, viewport);
                     }
                 }
             }
@@ -128,7 +128,7 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
             if (PolygonData != null) {
                 if (PolygonData.size() != 0) {
                     for (DEAlib_PolygonData polygon : PolygonData) {
-                        DEAlib_RenderPluginFunctions.DEA_DrawPolygon(polygon.vector2fList, polygon.colorList, polygon.filled, viewport);
+                        DEAlib_RenderPluginFunctions.DrawPolygon(polygon.vector2fList, polygon.colorList, polygon.filled, viewport);
                     }
                 }
             }
@@ -187,40 +187,40 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
         }
     }
 
-    public void DEAlib_LineInPlugin(List<DEAlib_LineData> lines) {
+    public void LineInPlugin(List<DEAlib_LineData> lines) {
         this.lines = lines;
     }
 
-    public void DEAlib_LineWWidthInPlugin(List<DEAlib_LineWWidthData> lineWWidths) {
+    public void LineWWidthInPlugin(List<DEAlib_LineWWidthData> lineWWidths) {
         this.lineWWidths = lineWWidths;
     }
 
 
-    public void DEAlib_Ring(List<DEAlib_RingData> RingData) {
+    public void Ring(List<DEAlib_RingData> RingData) {
         this.RingData = RingData;
     }
 
-    public void DEAlib_SquareInPlugin(List<DEAlib_SquareData> BoxDatas) {
+    public void SquareInPlugin(List<DEAlib_SquareData> BoxDatas) {
         this.SquareDatas = BoxDatas;
     }
 
-    public void DEAlib_TriangleInPlugin(List<DEAlib_TriangleData> TriangleDatas) {
+    public void TriangleInPlugin(List<DEAlib_TriangleData> TriangleDatas) {
         this.TriangleDatas = TriangleDatas;
     }
 
-    public void DEAlib_PolygonInPlugin(List<DEAlib_PolygonData> PolygonData) {
+    public void PolygonInPlugin(List<DEAlib_PolygonData> PolygonData) {
         this.PolygonData = PolygonData;
     }
 
-    public void DEAlib_CircleInPlugin(List<DEAlib_CircleData> CircleData) {
+    public void CircleInPlugin(List<DEAlib_CircleData> CircleData) {
         this.CircleData = CircleData;
     }
 
-    public void DEAlib_SphereInPlugin(List<DEAlib_SphereData> SphereData) {
+    public void SphereInPlugin(List<DEAlib_SphereData> SphereData) {
         this.SphereData = SphereData;
     }
 
-    public void DEAlib_ChangeRenderLayerInPlugin(CombatEngineLayers LAYER) {
+    public void ChangeRenderLayerInPlugin(CombatEngineLayers LAYER) {
         this.CURRENT_LAYER = LAYER;
     }
 

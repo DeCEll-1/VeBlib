@@ -8,7 +8,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 import java.util.Map;
 
-import static DEA.helper.DEAlib_BoundsHelper.DEAlib_GetRandomBoundLocation;
+import static DEA.helper.DEAlib_BoundsHelper.GetRandomBoundLocation;
 
 
 public class DEAlib_EMPArcHelper {
@@ -23,13 +23,13 @@ public class DEAlib_EMPArcHelper {
      * @param core      core color
      * @return if the proccess completed successfully returns true, false othervise. so instead of crashing it just, doesnt work
      */
-    public static boolean DEA_SpawnEMPArcVisual(Vector2f from, Vector2f to, float thickness, java.awt.Color fringe, java.awt.Color core) {
+    public static boolean SpawnEMPArcVisual(Vector2f from, Vector2f to, float thickness, java.awt.Color fringe, java.awt.Color core) {
         try {
             Global.getCombatEngine().spawnEmpArcVisual(
                     from,
-                    DEA_CombatEntityAPIForEMPArcVisaul(from),
+                    CombatEntityAPIForEMPArcVisaul(from),
                     to,
-                    DEA_CombatEntityAPIForEMPArcVisaul(to),
+                    CombatEntityAPIForEMPArcVisaul(to),
                     thickness,
                     fringe,
                     core
@@ -55,13 +55,13 @@ public class DEAlib_EMPArcHelper {
      * @param core            core color
      * @return if the proccess completed successfully returns true, false othervise. so instead of crashing it just, doesnt work
      */
-    public static boolean DEA_SpawnDamagingEMPArc(ShipAPI DamageSource, Vector2f from, CombatEntityAPI target, DEAlib_DamageBaseClass DamageBaseClass, float range, String ImpactSoundID, float thiccness, java.awt.Color fringe, java.awt.Color core) {
+    public static boolean SpawnDamagingEMPArc(ShipAPI DamageSource, Vector2f from, CombatEntityAPI target, DEAlib_DamageBaseClass DamageBaseClass, float range, String ImpactSoundID, float thiccness, java.awt.Color fringe, java.awt.Color core) {
 
         try {
             Global.getCombatEngine().spawnEmpArc(
                     DamageSource,
                     from,
-                    DEA_CombatEntityAPIForEMPArcVisaul(from),
+                    CombatEntityAPIForEMPArcVisaul(from),
                     target,
                     DamageBaseClass.DamageType,
                     DamageBaseClass.Damage,
@@ -82,7 +82,7 @@ public class DEAlib_EMPArcHelper {
     /**
      * you dont need to use it but if you do this just gives and combatentittyapi for emp arc visual that (probably) wont crash as long as you use in emp arc visual
      */
-    public static CombatEntityAPI DEA_CombatEntityAPIForEMPArcVisaul(final Vector2f location) {
+    private static CombatEntityAPI CombatEntityAPIForEMPArcVisaul(final Vector2f location) {
         return new CombatEntityAPI() {
             @Override
             public Vector2f getLocation() {
@@ -220,13 +220,13 @@ public class DEAlib_EMPArcHelper {
      * @param core      core color
      * @return if the proccess completed successfully returns true, false othervise. so instead of crashing it just, doesnt work
      */
-    public static boolean DEA_SpawnEMPArcsBetweenShipsBounds(ShipAPI ship, float thiccness, java.awt.Color fringe, java.awt.Color core) {
+    public static boolean SpawnEMPArcsBetweenShipsBounds(ShipAPI ship, float thiccness, java.awt.Color fringe, java.awt.Color core) {
         try {
-            Vector2f from = DEAlib_GetRandomBoundLocation(ship);
+            Vector2f from = GetRandomBoundLocation(ship);
 
-            Vector2f to = DEAlib_GetRandomBoundLocation(ship);
+            Vector2f to = GetRandomBoundLocation(ship);
 
-            DEA_SpawnEMPArcVisual(from, to, thiccness, fringe, core);
+            SpawnEMPArcVisual(from, to, thiccness, fringe, core);
             return true;
         } catch (Exception ex) {
             return false;
@@ -235,7 +235,7 @@ public class DEAlib_EMPArcHelper {
 
 
     /**
-     * spawns an arc between 2 randomly chosen bounds, if it selects the same ones it might not spawn an arc </br>
+     * spawns an arc between 2 randomly chosen bounds, if it selects the same ones it can spawn a weird looking arc </br>
      *
      * @param from      from
      * @param angle     angle
@@ -246,17 +246,17 @@ public class DEAlib_EMPArcHelper {
      * @param core      core color
      * @return if the proccess completed successfully returns true, false othervise. so instead of crashing it just, doesnt work
      */
-    public static boolean DEA_SpawnEMPArcLineVisual(Vector2f from, float angle, int lenght, float thiccness, float space, java.awt.Color fringe, java.awt.Color core) {
+    public static boolean SpawnEMPArcLineVisual(Vector2f from, float angle, int lenght, float thiccness, float space, java.awt.Color fringe, java.awt.Color core) {
         try {
             Vector2f to = new Vector2f();
 
             for (int i = 0; i < lenght; i++) {
                 if (i % 2 == 0) {
                     to = MathUtils.getPointOnCircumference(from, space, angle);
-                    DEA_SpawnEMPArcVisual(from, to, thiccness, fringe, core);
+                    SpawnEMPArcVisual(from, to, thiccness, fringe, core);
                 } else {
                     from = MathUtils.getPointOnCircumference(to, space, angle);
-                    DEA_SpawnEMPArcVisual(to, from, thiccness, fringe, core);
+                    SpawnEMPArcVisual(to, from, thiccness, fringe, core);
                 }
             }
 
@@ -281,7 +281,7 @@ public class DEAlib_EMPArcHelper {
      * @param core       core color
      * @return if the proccess completed successfully returns true, false othervise. so instead of crashing it just, doesnt work
      */
-    public static boolean DEA_SpawnEMPArcLineDamaging(Vector2f from, float angle, int lenght, float thiccness, float space, DEAlib_DamageBaseClass DamageInfo, ShipAPI source, java.awt.Color fringe, java.awt.Color core) {
+    public static boolean SpawnEMPArcLineDamaging(Vector2f from, float angle, int lenght, float thiccness, float space, DEAlib_DamageBaseClass DamageInfo, ShipAPI source, java.awt.Color fringe, java.awt.Color core) {
         try {
             Vector2f to = new Vector2f();
 
@@ -291,7 +291,7 @@ public class DEAlib_EMPArcHelper {
 
                 if (i % 2 == 0) {
                     to = MathUtils.getPointOnCircumference(from, space, angle);
-                    DEA_SpawnEMPArcVisual(from, to, thiccness, fringe, core);
+                    SpawnEMPArcVisual(from, to, thiccness, fringe, core);
 
                     for (CombatEntityAPI s : CombatUtils.getEntitiesWithinRange(to, space)) {//those are for checking if they are near anything but it lags more than without it rn so
                         if (s instanceof ShipAPI) {
@@ -321,7 +321,7 @@ public class DEAlib_EMPArcHelper {
                     }
                 } else {
                     from = MathUtils.getPointOnCircumference(to, space, angle);
-                    DEA_SpawnEMPArcVisual(to, from, thiccness, fringe, core);
+                    SpawnEMPArcVisual(to, from, thiccness, fringe, core);
                     for (CombatEntityAPI s : CombatUtils.getEntitiesWithinRange(from, space)) {
                         if (s instanceof ShipAPI) {
                             IsNearSomething = true;

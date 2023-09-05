@@ -27,14 +27,15 @@ public class DEAlib_ModPlugin extends BaseModPlugin {
         StringBuilder errText = new StringBuilder("    *-*   ");
         try {
             errText.append("DEA_Logger.DEA_log(DEA_Plugin.class, \"loadedDEA\");");
-            DEAlib_Logger.DEA_log(DEAlib_ModPlugin.class, "loadedDEAlib");
+            DEAlib_Logger.log(DEAlib_ModPlugin.class, "loadedDEAlib");
             errText.append("    *-*    worked");
 
 //            DEAlib_CustomUIPanelPlugin deAlibCampaignUIPlugin = new DEAlib_CustomUIPanelPlugin();
 
+            Global.getSettings().writeTextFileToCommon("DEAlib","DATA1");
 
         } catch (Exception ex) {
-            DEAlib_Logger.DEA_log(DEAlib_ModPlugin.class, "DEA_ERROR" + errText + "\n ERROR MESSAGE: " + ex.getMessage());
+            DEAlib_Logger.log(DEAlib_ModPlugin.class, "DEA_ERROR" + errText + "\n ERROR MESSAGE: " + ex.getMessage());
         }
     }
 
@@ -71,7 +72,7 @@ public class DEAlib_ModPlugin extends BaseModPlugin {
             if (s.getId().equals("dealib_testsector")) {
                 DEAlib_TestSystem = s;
             }
-            DEAlib_Logger.DEA_log(DEAlib_ModPlugin.class, s.getId(), s.getName());
+            DEAlib_Logger.log(DEAlib_ModPlugin.class, s.getId(), s.getName());
         }
 
         if (DEAlib_TestSystem == null) {
