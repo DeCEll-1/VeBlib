@@ -75,7 +75,7 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
 //            glTranslatef(0.01f, 0.01f, 0f);
 //            glEnable(GL_LINE_SMOOTH);
 //            glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-//            glLineWidth(1.5f);//i stole this from https://github.com/DesperatePeter/starsector-symbiotic-void-creatures/blob/main/src/tecrys/svc/utils/GLUtils.kt and will ask about it if it works but it didnt so
+//            glLineWidth(1.5f);//i stole this from https://github.com/DesperatePeter/starsector-symbiotic-void-creatures/blob/main/src/tecrys/svc/utils/GLUtils.kt and will ask about it if itd workd but it didnt so
 
 //            glDisable(GL_TEXTURE_2D);
 
@@ -112,7 +112,6 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
                         } else {
                             DEAlib_RenderPluginFunctions.DrawSquare(square.leftTop, square.rightTop, square.leftBottom, square.rightBottom, square.lineColor, square.filled, square.texture, viewport);
                         }
-
                     }
                 }
             }
@@ -120,7 +119,12 @@ public class DEAlib_RendererPlugin extends BaseCombatLayeredRenderingPlugin {
             if (TriangleDatas != null) {
                 if (TriangleDatas.size() != 0) {
                     for (DEAlib_TriangleData triangle : TriangleDatas) {
-                        DEAlib_RenderPluginFunctions.DrawTriangle(triangle.corner1, triangle.corner2, triangle.corner3, triangle.color, triangle.filled, viewport);
+                        if (triangle.texture == null) {
+                            DEAlib_RenderPluginFunctions.DrawTriangle(triangle.corner1, triangle.corner2, triangle.corner3, triangle.color, triangle.filled, viewport);
+                        } else {
+                            DEAlib_RenderPluginFunctions.DrawTriangle(triangle.corner1, triangle.corner2, triangle.corner3, triangle.color, triangle.filled, triangle.texture, viewport);
+                        }
+
                     }
                 }
             }

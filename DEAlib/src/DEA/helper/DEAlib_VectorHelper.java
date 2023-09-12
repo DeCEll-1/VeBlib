@@ -9,7 +9,7 @@ import java.util.List;
 public class DEAlib_VectorHelper {
 
     /**
-     * <b> it starts from bottom and is reverse clockwise</b> </br>
+     * <b> it clockwise turns, idk the order</b> </br>
      *
      * @param relived the list of vectors that will get ordered //dont mind the name
      * @return returns the "ordered" list of vectors

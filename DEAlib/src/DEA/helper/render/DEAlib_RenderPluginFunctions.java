@@ -2,12 +2,14 @@ package DEA.helper.render;
 
 import DEA.helper.DEAlib_VectorHelper;
 import cmu.gui.CMUKitUI;
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.combat.ViewportAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import org.lazywizard.lazylib.MathUtils;
 import org.lazywizard.lazylib.VectorUtils;
 import org.lazywizard.lazylib.opengl.DrawUtils;
 import org.lwjgl.util.vector.Vector2f;
+import  org.lazywizard.lazylib.MathUtils;
 
 import java.awt.*;
 import java.util.List;
@@ -455,6 +457,53 @@ public class DEAlib_RenderPluginFunctions {
 
 
     }
+
+    public static void DrawTriangle(Vector2f corner1, Vector2f corner2, Vector2f corner3, Color color, boolean filled,SpriteAPI texture, ViewportAPI viewport) {
+
+//        if (color == null) return;
+
+        if (texture==null) return;
+
+        if (filled) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+
+        texture.bindTexture();
+
+        glEnable(GL_TEXTURE_2D);//doesnt work without this
+        glBegin(GL_TRIANGLES);
+
+
+
+        glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+
+        glTexCoord2f(1f,0f);
+        glVertex2f(viewport.convertWorldXtoScreenX(corner1.x), viewport.convertWorldYtoScreenY(corner1.y));
+
+        glTexCoord2f(0f,0f);
+        glVertex2f(viewport.convertWorldXtoScreenX(corner2.x), viewport.convertWorldYtoScreenY(corner2.y));
+
+
+        glTexCoord2f(0f,1f);
+        glVertex2f(viewport.convertWorldXtoScreenX(corner3.x), viewport.convertWorldYtoScreenY(corner3.y));
+
+//        glEnd();
+
+//        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//        glBegin(GL_POLYGON);
+
+
+        glEnd();
+
+//        glFlush();
+        glDisable(GL_TEXTURE_2D);
+
+
+
+    }
+
 
 
 }

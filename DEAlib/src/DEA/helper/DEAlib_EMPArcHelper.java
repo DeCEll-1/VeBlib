@@ -1,5 +1,6 @@
 package DEA.helper;
 
+import DEA.helper.helperHelperClasses.DEAlib_DamageBaseClass;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.combat.*;
 import org.lazywizard.lazylib.MathUtils;
@@ -235,7 +236,7 @@ public class DEAlib_EMPArcHelper {
 
 
     /**
-     * spawns an arc between 2 randomly chosen bounds, if it selects the same ones it can spawn a weird looking arc </br>
+     * spawns an arc line, (un)intentionally it stops when it hits an obsteckle</br>
      *
      * @param from      from
      * @param angle     angle
@@ -267,8 +268,8 @@ public class DEAlib_EMPArcHelper {
     }
 
     /**
-     * spawns damaging arc </br>
-     * DONT PLAY WİTH THİS İT GİVES WEİRD ASS ERRORS THAT İ DONT KNOW HOW TO SOLVE</br>
+     * spawns damaging arc line </br>
+     * DONT PLAY WİTH THİS İT GİVES WEİRD ERRORS THAT İ DONT KNOW HOW TO SOLVE</br>
      *
      * @param from       from
      * @param angle      angle

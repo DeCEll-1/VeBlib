@@ -32,7 +32,7 @@ public class DEAlib_ModPlugin extends BaseModPlugin {
 
 //            DEAlib_CustomUIPanelPlugin deAlibCampaignUIPlugin = new DEAlib_CustomUIPanelPlugin();
 
-            Global.getSettings().writeTextFileToCommon("DEAlib","DATA1");
+//            Global.getSettings().writeTextFileToCommon("DEAlib","DATA1");
 
         } catch (Exception ex) {
             DEAlib_Logger.log(DEAlib_ModPlugin.class, "DEA_ERROR" + errText + "\n ERROR MESSAGE: " + ex.getMessage());

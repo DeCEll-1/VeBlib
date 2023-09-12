@@ -1,4 +1,4 @@
-package DEA.helper;
+package DEA.helper.helperHelperClasses;
 
 import com.fs.starfarer.api.combat.DamageType;
 import com.fs.starfarer.api.loading.DamagingExplosionSpec;

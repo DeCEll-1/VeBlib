@@ -1,6 +1,6 @@
 //package DEA.helper.deepstorage;//this whole thing has been scrapped because i did this before learning how to use opengl. long live the opengl!
 //
-//import DEA.helper.DEAlib_DamageBaseClass;
+//import DEA.helper.helperHelperClasses.DEAlib_DamageBaseClass;
 //import com.fs.starfarer.api.Global;
 //import com.fs.starfarer.api.combat.DamageType;
 //import com.fs.starfarer.api.combat.ShipAPI;
