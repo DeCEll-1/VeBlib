@@ -1,0 +1,31 @@
+{
+  "id": "VeBlib",
+  "name": "VeBlib",
+  "author": "DeCell#7556",
+  "totalConversion": "false",
+  "version": {
+    "major": 0,
+    "minor": 1,
+    "patch": 0
+  },
+  "description": " 	\"query. query. query target. is 41c04961-822d-40e5-b8d2-73fdd15d62da lib? 41c04961-822d-40e5-b8d2-73fdd15d62da lib? no. revert function.\" ",
+  "gameVersion": "0.96a-RC9",
+  "modPlugin":"VeB.helper.plugins.VeBlib_ModPlugin",
+  "jars": [
+    "jars/VeBlib.jar"
+  ],
+  "dependencies": [
+    {
+      "id": "lw_lazylib",
+      "name": "LazyLib"
+    },
+    {
+      "id": "MagicLib",
+      "name": "MagicLib"
+    },
+    {
+      "id": "cmutils",
+      "name": "Combat Misc Utils"
+    }
+  ]
+}

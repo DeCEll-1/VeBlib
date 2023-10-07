@@ -1,0 +1,1 @@
+the reason why there are some empthy files are for when a non save compatible update comes the user can still use the save without crashes. dw it doesnt lag the old ones are removed when the save loads
